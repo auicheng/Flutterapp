@@ -2,7 +2,6 @@ import 'dart:io' as io;
 import 'dart:math';
 import 'dart:async';
 
-
 import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter/material.dart';
@@ -125,6 +124,7 @@ class AppBodyState extends State<AppBody> {
                 color: Colors.red,
               ),
               ],),
+              ButtonWidget(context),
               // new TextField(
               //   controller: _controller,
               //   decoration: new InputDecoration(
@@ -214,6 +214,57 @@ class AppBodyState extends State<AppBody> {
     _controller.text = recording.path;
   }
 
+}
+
+Widget ButtonWidget(context) {
+  return Container(
+    margin: EdgeInsets.only(left: 55.0, top: 22.0),
+    child: Row(
+      children: <Widget>[
+        GestureDetector(
+          onTap: (){
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => AppBody()
+                    ),
+            );                  
+          },
+          child:         
+          InkWell(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 95.0, vertical: 16.0),
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 15,
+                      spreadRadius: 0,
+                      offset: Offset(0.0, 26.0)),
+                ],
+                borderRadius: new BorderRadius.circular(36.0),
+                gradient: LinearGradient(begin: FractionalOffset.centerLeft,
+// Add one stop for each color. Stops should increase from 0 to 1
+                    stops: [
+                      0.2,
+                      1
+                    ], colors: [
+                  Color(0xff000000),
+                  Color(0xff434343),
+                ])),
+            child: Text(
+              'Predict',
+              style: TextStyle(
+                  color: Color(0xffF1EA94),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat'),
+            ),
+          ),
+        ),)
+      ],
+    ),
+  );
 }
 
 
