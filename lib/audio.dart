@@ -92,8 +92,9 @@ class AppBodyState extends State<AppBody> {
 
   void predict() async{ 
       print('object');
+      try{
        var dio = new Dio(BaseOptions(connectTimeout: 5000));
-        dio.interceptors.add(LogInterceptor(responseBody: true));
+       dio.interceptors.add(LogInterceptor(responseBody: true));
 
       var audioFile = new io.File("${_recording.path}");
 
@@ -114,7 +115,66 @@ class AppBodyState extends State<AppBody> {
         dataforgender.add(ordinalgender);
       });
 
+      }catch(e){
+        print(e);
+      }
+
   }
+
+  Widget ButtonWidget(context) {
+  return Container(
+    margin: EdgeInsets.only(left: 55.0, top: 22.0),
+    child: Row(
+      children: <Widget>[
+        GestureDetector(
+          onTap: (){
+            predict();
+            Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
+                    ),
+            );                  
+          },
+          child:         
+          InkWell(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 95.0, vertical: 16.0),
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 15,
+                      spreadRadius: 0,
+                      offset: Offset(0.0, 26.0)),
+                ],
+                borderRadius: new BorderRadius.circular(36.0),
+                gradient: LinearGradient(begin: FractionalOffset.centerLeft,
+// Add one stop for each color. Stops should increase from 0 to 1
+                    stops: [
+                      0.2,
+                      1
+                    ], colors: [
+                  Color(0xff000000),
+                  Color(0xff434343),
+                ])),
+            child: Text(
+              'Predict',
+              style: TextStyle(
+                  color: Color(0xffF1EA94),
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'Montserrat'),
+            ),
+          ),
+        ),)
+      ],
+    ),
+  );
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -157,12 +217,7 @@ class AppBodyState extends State<AppBody> {
                 color: Colors.red,
               ),
               ],),
-              new RaisedButton(
-                 onPressed: 
-                      predict
-                 ,
-              )
-              // ButtonWidget(context, dataforgender,predict),
+              ButtonWidget(context),
               // new TextField(
               //   controller: _controller,
               //   decoration: new InputDecoration(
@@ -254,57 +309,57 @@ class AppBodyState extends State<AppBody> {
 
 }
 
-Widget ButtonWidget(context,dataforgender,callback) {
-  return Container(
-    margin: EdgeInsets.only(left: 55.0, top: 22.0),
-    child: Row(
-      children: <Widget>[
-        GestureDetector(
-          onTap: (){
-            callback;
-            Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
-                    ),
-            );                  
-          },
-          child:         
-          InkWell(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 95.0, vertical: 16.0),
-            decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 15,
-                      spreadRadius: 0,
-                      offset: Offset(0.0, 26.0)),
-                ],
-                borderRadius: new BorderRadius.circular(36.0),
-                gradient: LinearGradient(begin: FractionalOffset.centerLeft,
-// Add one stop for each color. Stops should increase from 0 to 1
-                    stops: [
-                      0.2,
-                      1
-                    ], colors: [
-                  Color(0xff000000),
-                  Color(0xff434343),
-                ])),
-            child: Text(
-              'Predict',
-              style: TextStyle(
-                  color: Color(0xffF1EA94),
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  fontFamily: 'Montserrat'),
-            ),
-          ),
-        ),)
-      ],
-    ),
-  );
-}
+// Widget ButtonWidget(context) {
+//   return Container(
+//     margin: EdgeInsets.only(left: 55.0, top: 22.0),
+//     child: Row(
+//       children: <Widget>[
+//         GestureDetector(
+//           onTap: (){
+//             callback;
+//             Navigator.push(
+//                   context,
+//                   MaterialPageRoute(
+//                     builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
+//                     ),
+//             );                  
+//           },
+//           child:         
+//           InkWell(
+//           child: Container(
+//             padding: EdgeInsets.symmetric(horizontal: 95.0, vertical: 16.0),
+//             decoration: BoxDecoration(
+//                 boxShadow: [
+//                   BoxShadow(
+//                       color: Colors.black12,
+//                       blurRadius: 15,
+//                       spreadRadius: 0,
+//                       offset: Offset(0.0, 26.0)),
+//                 ],
+//                 borderRadius: new BorderRadius.circular(36.0),
+//                 gradient: LinearGradient(begin: FractionalOffset.centerLeft,
+// // Add one stop for each color. Stops should increase from 0 to 1
+//                     stops: [
+//                       0.2,
+//                       1
+//                     ], colors: [
+//                   Color(0xff000000),
+//                   Color(0xff434343),
+//                 ])),
+//             child: Text(
+//               'Predict',
+//               style: TextStyle(
+//                   color: Color(0xffF1EA94),
+//                   fontSize: 18,
+//                   fontWeight: FontWeight.bold,
+//                   fontFamily: 'Montserrat'),
+//             ),
+//           ),
+//         ),)
+//       ],
+//     ),
+//   );
+// }
 
 
 class TimerText extends StatefulWidget {
