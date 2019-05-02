@@ -164,7 +164,7 @@ class AppBodyState extends State<AppBody> {
               //       ),)
               //    },
               // )
-              ButtonWidget(context, dataforgender),
+              ButtonWidget(context, dataforgender,predict),
               // new TextField(
               //   controller: _controller,
               //   decoration: new InputDecoration(
@@ -256,13 +256,14 @@ class AppBodyState extends State<AppBody> {
 
 }
 
-Widget ButtonWidget(context,dataforgender) {
+Widget ButtonWidget(context,dataforgender,callback) {
   return Container(
     margin: EdgeInsets.only(left: 55.0, top: 22.0),
     child: Row(
       children: <Widget>[
         GestureDetector(
           onTap: (){
+            callback;
             Navigator.push(
                   context,
                   MaterialPageRoute(
