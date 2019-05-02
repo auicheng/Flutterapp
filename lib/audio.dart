@@ -91,6 +91,7 @@ class AppBodyState extends State<AppBody> {
   List<OrdinalGender> dataforgender = [];
 
   void predict() async{ 
+      print('object');
        var dio = new Dio(BaseOptions(connectTimeout: 5000));
         dio.interceptors.add(LogInterceptor(responseBody: true));
 
@@ -156,15 +157,12 @@ class AppBodyState extends State<AppBody> {
                 color: Colors.red,
               ),
               ],),
-              // new RaisedButton(
-              //    onPressed: () => {
-              //         Navigator.push(context,
-              //               MaterialPageRoute(
-              //               builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
-              //       ),)
-              //    },
-              // )
-              ButtonWidget(context, dataforgender,predict),
+              new RaisedButton(
+                 onPressed: 
+                      predict
+                 ,
+              )
+              // ButtonWidget(context, dataforgender,predict),
               // new TextField(
               //   controller: _controller,
               //   decoration: new InputDecoration(
