@@ -12,6 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 import 'const.dart';
+import 'animation.dart';
+import 'data_model.dart';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+
 
 
 class PageTwo extends StatefulWidget {
@@ -82,6 +88,32 @@ class AppBodyState extends State<AppBody> {
   Random random = new Random();
   TextEditingController _controller = new TextEditingController();
   Stopwatch stopwatch = Stopwatch();
+  List<OrdinalGender> dataforgender = [];
+
+  void predict() async{ 
+       var dio = new Dio(BaseOptions(connectTimeout: 5000));
+        dio.interceptors.add(LogInterceptor(responseBody: true));
+
+      var audioFile = new io.File("${_recording.path}");
+
+      // var body = json.encode(value)
+      // var response = await client
+      //   .post(
+      //     'url'
+      //   ).whenComplete(client.close);
+
+      var response = await dio.post(
+        "url",
+        data: audioFile.openRead(),
+      );
+        // if(!mounted)
+      var ordinalgender = OrdinalGender.fromJson(json.decode(response.data));
+
+      setState(() {
+        dataforgender.add(ordinalgender);
+      });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +128,7 @@ class AppBodyState extends State<AppBody> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                   _buildRecordingStatus(),
-                  _buildTimerText(),                  ],
+                  _buildTimerText(), ],
               ),
               Row(children: <Widget>[
               Container(
@@ -124,7 +156,15 @@ class AppBodyState extends State<AppBody> {
                 color: Colors.red,
               ),
               ],),
-              ButtonWidget(context),
+              // new RaisedButton(
+              //    onPressed: () => {
+              //         Navigator.push(context,
+              //               MaterialPageRoute(
+              //               builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
+              //       ),)
+              //    },
+              // )
+              ButtonWidget(context, dataforgender),
               // new TextField(
               //   controller: _controller,
               //   decoration: new InputDecoration(
@@ -160,7 +200,7 @@ class AppBodyState extends State<AppBody> {
                     color: Colors.black87.withOpacity(0.7),
                     type: SpinKitWaveType.start),
               )
-            : Image.network("https://raw.githubusercontent.com/OpenFlutter/Flutter-Notebook/master/mecury_project/example/animation_challenge/assets/recorder.png"));
+            : Image.asset("assets/pics/recorder.png"));
   }
 
   _start() async {
@@ -216,7 +256,7 @@ class AppBodyState extends State<AppBody> {
 
 }
 
-Widget ButtonWidget(context) {
+Widget ButtonWidget(context,dataforgender) {
   return Container(
     margin: EdgeInsets.only(left: 55.0, top: 22.0),
     child: Row(
@@ -226,7 +266,7 @@ Widget ButtonWidget(context) {
             Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (BuildContext context) => AppBody()
+                    builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
                     ),
             );                  
           },

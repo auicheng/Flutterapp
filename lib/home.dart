@@ -12,8 +12,8 @@ class Home extends StatelessWidget{
           physics: BouncingScrollPhysics(),
           children: <Widget>[
           Center(
-                  child: Image.network(
-                  'https://cdn2.iconfinder.com/data/icons/science-20/24/science-technology-10-512.png',
+                  child: Image.asset(
+                  'assets/pics/science-technology-10-512.png',
                   width: 135.0,
                   height: 135.0,
                   fit: BoxFit.cover,
@@ -66,7 +66,7 @@ Widget footer() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: <Widget>[
-        Image.network('https://i.loli.net/2019/04/24/5cbf746e36b94.png',
+        Image.asset('assets/pics/lab.png',
                   width: 45.0,
                   height: 45.0,
         ),
