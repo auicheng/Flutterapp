@@ -26,8 +26,6 @@ dependencies:
 
   flutter_spinkit: "^3.1.0"
 
-  fluttie: ^0.3.0
-
   charts_flutter: ^0.6.0
 
 dev_dependencies:
