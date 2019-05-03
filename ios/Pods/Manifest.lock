@@ -1,0 +1,28 @@
+PODS:
+  - audio_recorder2 (0.0.1):
+    - Flutter
+  - Flutter (1.0.0)
+  - path_provider (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - audio_recorder2 (from `.symlinks/plugins/audio_recorder2/ios`)
+  - Flutter (from `.symlinks/flutter/ios`)
+  - path_provider (from `.symlinks/plugins/path_provider/ios`)
+
+EXTERNAL SOURCES:
+  audio_recorder2:
+    :path: ".symlinks/plugins/audio_recorder2/ios"
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  path_provider:
+    :path: ".symlinks/plugins/path_provider/ios"
+
+SPEC CHECKSUMS:
+  audio_recorder2: 83e0534b52dc985ce61307b1379398905ab8bd86
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  path_provider: 09407919825bfe3c2deae39453b7a5b44f467873
+
+PODFILE CHECKSUM: 8012a82974beaea3604539a6bcde42bc366943e5
+
+COCOAPODS: 1.5.3

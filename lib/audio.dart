@@ -12,12 +12,12 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 
 import 'const.dart';
-import 'animation.dart';
+import 'predic.dart';
 import 'data_model.dart';
 import 'dart:convert';
-
+import 'package:http/http.dart';
 import 'package:dio/dio.dart';
-
+import 'package:path/path.dart' as path;
 
 
 class PageTwo extends StatefulWidget {
@@ -90,26 +90,41 @@ class AppBodyState extends State<AppBody> {
   Stopwatch stopwatch = Stopwatch();
   List<OrdinalGender> dataforgender = [];
 
-  void predict() async{ 
-      print('object');
+  void predict() async{
+//      print('object');
+//      var uri = Uri.parse("http://pub.dartlang.org/packages/create");
+//      var request = new MultipartRequest("POST", uri);
+//      request.fields['user'] = 'nweiz@google.com';
+//      request.files.add(new http.MultipartFile.fromPath(
+//          'build/package.tar.gz',
+//          contentType: new MediaType('application', 'x-tar'));
+//          var response = await request.send();
+//      if (response.statusCode == 200) print('Uploaded!');
+
+      var filename = path.basename("${_recording.path}");
       try{
        var dio = new Dio(BaseOptions(connectTimeout: 5000));
        dio.interceptors.add(LogInterceptor(responseBody: true));
-
-      var audioFile = new io.File("${_recording.path}");
 
       // var body = json.encode(value)
       // var response = await client
       //   .post(
       //     'url'
       //   ).whenComplete(client.close);
+       FormData formData = new FormData.from({
+         "sound": new UploadFileInfo(new io.File("${_recording.path}"), filename)
+       });
 
       var response = await dio.post(
-        "url",
-        data: audioFile.openRead(),
+        "http://localhost:5001/predict/gender",
+        data: formData,
       );
         // if(!mounted)
-      var ordinalgender = OrdinalGender.fromJson(json.decode(response.data));
+       print(1);
+//      var respJson = await json.decode(response.data);
+//      print('respJson runType is ${response.data.runtimeType}');
+      var ordinalgender = OrdinalGender.fromJson(response.data);
+//      print(ordinalgender.gender);
 
       setState(() {
         dataforgender.add(ordinalgender);
@@ -121,6 +136,24 @@ class AppBodyState extends State<AppBody> {
 
   }
 
+  void countDown(){
+    var duration=new Duration(seconds: 3);//定义一个三秒种的时间
+    new Future.delayed(duration,(){//设置定时执行
+      goToMainPage();
+    });
+  }
+
+  void goToMainPage(){
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (BuildContext context) =>
+              Pagethree(dataforgender)
+      ),
+    );
+  }
+
+
   Widget ButtonWidget(context) {
   return Container(
     margin: EdgeInsets.only(left: 55.0, top: 22.0),
@@ -128,13 +161,9 @@ class AppBodyState extends State<AppBody> {
       children: <Widget>[
         GestureDetector(
           onTap: (){
-            predict();
-            Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (BuildContext context) => new HorizontalBarChart.withSampleData(dataforgender)
-                    ),
-            );                  
+              predict();
+              countDown();
+
           },
           child:         
           InkWell(
