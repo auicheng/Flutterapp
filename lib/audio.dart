@@ -137,7 +137,7 @@ class AppBodyState extends State<AppBody> {
   }
 
   void countDown(){
-    var duration=new Duration(seconds: 3);//定义一个三秒种的时间
+    var duration=new Duration(seconds: 1);//定义一个三秒种的时间
     new Future.delayed(duration,(){//设置定时执行
       goToMainPage();
     });
